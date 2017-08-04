@@ -1,0 +1,10 @@
+{
+  "urlPrefix":"http://api.bs.local.gomeplus.com",
+  "debug":true,
+  "sourceBases" : [
+    {
+      "id":"default",
+      "urlPrefix":"http://localhost:8080"
+    }
+  ]
+}

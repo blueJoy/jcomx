@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright (c) 2014 杭州端点网络科技有限公司
+  -->
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+
+    <!--变量声明-->
+    <property name="APP_NAME" value="jcomx"/>   <!--项目名-->
+    <property name="LOG_ROOT" value="/gomeo2o/logs/venus" /><!--日志根目录-->
+    <property name="LEVEL" value="DEBUG" />                 <!--日志级别-->
+    <property name="DEFAULT_FILE" value="FILE" />           <!--日志输入目标-->
+
+    <contextName>${APP_NAME}</contextName>
+
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_ROOT}/${APP_NAME}/${APP_NAME}.log</file>
+        <encoder>
+            <pattern>## [%X{logSessionId}] [%date] [%-5p] [%thread] [%logger{50}] [%line] %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_ROOT}/${APP_NAME}/${APP_NAME}-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>## [%X{logSessionId}] [%date] [%-5p] [%thread] [%logger{50}] [%line] %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>${LEVEL}</level>
+        </filter>
+    </appender>
+
+    <!-- 第三方包的日志过滤级别 -->
+    <logger name="org.apache.zookeeper" level="info" />
+    <logger name="org.springframework" level="info"/>
+    <logger name="org.slf4j" level="info"/>
+    <logger name="ch.qos.logback" level="info"/>
+
+
+    <!--     <property name="smtpHost" value="mail.gomeplus.com" />
+        <property name="smtpPort" value="587" />
+        <property name="username" value="zhangzuliang@gomeplus.com" />
+        <property name="password" value="1234.gome" />
+        <property name="SSL" value="false" />
+        <property name="email_to" value="zhangzuliang@gomeplus.com,baixiangzhu@gomeplus.com,yangzongbin@gomeplus.com" />
+
+        <property name="email_from" value="zhangzuliang@gomeplus.com" />
+        <property name="email_subject" value="crm dubbo dev auto 【Error】: %logger" />
+
+        <appender name="EMAIL" class="ch.qos.logback.classic.net.SMTPAppender">
+            <smtpHost>${smtpHost}</smtpHost>
+            <smtpPort>${smtpPort}</smtpPort>
+            <username>${username}</username>
+            <password>${password}</password>
+            <SSL>${SSL}</SSL>
+            <asynchronousSending>false</asynchronousSending>
+            <to>${email_to}</to>
+            <from>${email_from}</from>
+            <subject>${email_subject}</subject>
+            <layout class="ch.qos.logback.classic.html.HTMLLayout" >
+                <pattern>%date%level%thread%logger{0}%line%message</pattern>
+            </layout>
+            <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+                <evaluator class="ch.qos.logback.classic.boolex.JaninoEventEvaluator">
+                    <expression>
+                        & encoded as &amp;
+                        if(level > WARN &amp;&amp; null != throwable) {
+                            return true;
+                        }
+                        return false;
+                    </expression>
+                </evaluator>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+            </filter>
+    </appender>   -->
+
+    <!-- Strictly speaking, the level attribute is not necessary since -->
+    <!-- the level of the root level is set to DEBUG by default.     <root level="${logLevel}">    -->
+    <!-- <root level="DEBUG">
+		<appender-ref ref="EMAIL"/>
+      <appender-ref ref="${logDefaultFile}"/>
+        <appender-ref ref="STDOUT"/>
+    </root> -->
+    <root level="${LEVEL}">
+        <!--<appender-ref ref="${DEFAULT_FILE}"/>-->
+        <appender-ref ref="STDOUT" />
+    </root>
+
+
+</configuration>

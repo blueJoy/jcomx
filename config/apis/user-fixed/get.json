@@ -1,0 +1,36 @@
+{
+    "meta":{
+        "name":"测试ext",
+        "module":"test",
+        "memo":"test",
+        "uri":{
+            "parameters":[
+                {
+                    "field":"userId",
+                    "name":"职员编号"
+                }
+            ]
+        }
+    },
+    "decors":[
+        {
+            "source":{
+                "base":"default",
+				"uri":"/user?userId={request.url.query.userId}"
+            },
+            "decors":[
+                {
+					"type":"Fixed",
+                    "field":"titleId",
+                    "fixedData":{
+						"xxx":111,
+						"yyy":222
+					},
+					"onError": {
+							"type": "ignore"
+						}
+                }
+            ]
+        }
+    ]
+}
