@@ -5,6 +5,56 @@
     {
       "id":"default",
       "urlPrefix":"http://localhost:8080"
+    },
+    {
+      "id" : "redis",
+      "type": "redis",
+      "isCluster":false,
+      "redis":{
+        "servers":[{
+          "host":"192.168.16.133",
+          "port":"6379"
+         // "password":"gome123456"
+        }],
+        "options":{
+          "exceptions":true,
+          "cluster":"redis"
+        }
+      }
+    },
+    {
+      "id" : "redis-cluster",
+      "type": "redis",
+      "redis":{
+        "servers":[{
+          "host":"192.168.16.133",
+          "port":"7000"
+        },
+        {
+          "host":"192.168.16.133",
+          "port":"7001"
+        },
+        {
+          "host":"192.168.16.133",
+          "port":"7002"
+        },
+        {
+          "host":"192.168.16.133",
+          "port":"7003"
+        },
+        {
+          "host":"192.168.16.133",
+          "port":"7004"
+        },
+        {
+          "host":"192.168.16.133",
+          "port":"7005"
+        }],
+        "options":{
+          "exceptions":true,
+          "cluster":"redis"
+        }
+      }
     }
   ]
 }

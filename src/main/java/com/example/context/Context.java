@@ -4,6 +4,8 @@ import com.example.http.RequestMessage;
 import com.example.http.ResponseMessage;
 import com.example.interfaces.IBuilder;
 import com.example.schema.Schema;
+import com.example.schema.source.Source;
+import com.example.schema.source.SourceBaseFactory;
 
 
 /**
@@ -23,12 +25,15 @@ public class Context {
 
     private final Schema schema;
 
+    private final SourceBaseFactory sourceBaseFactory;
+
 
     private Context(Builder builder){
         this.request = builder.request;
         this.response = builder.response;
         this.traceId = builder.traceId;
         this.schema = builder.schema;
+        this.sourceBaseFactory = builder.sourceBaseFactory;
     }
 
 
@@ -48,6 +53,10 @@ public class Context {
         return schema;
     }
 
+    public SourceBaseFactory getSourceBaseFactory() {
+        return sourceBaseFactory;
+    }
+
     public static class Builder implements IBuilder<Context>{
 
         private  RequestMessage request;
@@ -57,6 +66,8 @@ public class Context {
         private String traceId;
 
         private Schema schema;
+
+        private SourceBaseFactory sourceBaseFactory;
 
         public Builder request(RequestMessage request){
             this.request = request;
@@ -78,6 +89,13 @@ public class Context {
             this.schema = schema;
             return this;
         }
+
+        public Builder sourceBaseFactory(SourceBaseFactory sourceBaseFactory){
+            this.sourceBaseFactory = sourceBaseFactory;
+            return this;
+        }
+
+
 
         @Override
         public Context build() {

@@ -46,9 +46,6 @@ public class ComxConfigLoader {
         String configPath = COMX_HOME + Constants.DIRECTORY_SEPARATOR + CONF_FILE_NAME;
         comxConf = Loader.fromJsonFile(configPath);
 
-        //初始化SourceFactory
-        SourceBaseFactory.fromConf(comxConf);
-
         //初始化ScriptFactory
         GroovyScriptFactory.init();
 

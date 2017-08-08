@@ -5,6 +5,7 @@ import com.example.exceptions.ConfigException;
 import com.example.exceptions.UnknownSourceBaseTypeException;
 import com.example.schema.source.sourcebase.AbstractSourceBase;
 import com.example.schema.source.sourcebase.HttpSourceBase;
+import com.example.schema.source.sourcebase.RedisSourceBase;
 
 import java.util.HashMap;
 
@@ -20,6 +21,7 @@ public class SourceBaseFactory {
 
     private static final String FIELD_TYPE              = "type";
     private static final String TYPE_HTTP               = "http";
+    private static final String TYPE_REDIS               = "redis";
 
 
 
@@ -48,16 +50,16 @@ public class SourceBaseFactory {
         }
 
 
-
         return factory;
     }
 
-    private static AbstractSourceBase populateBaseObject(Config config) {
+    private static AbstractSourceBase populateBaseObject(Config config) throws ConfigException {
 
         String type = config.str(FIELD_TYPE,DEFAULT_TYPE);
 
         switch (type){
             case TYPE_HTTP: return new HttpSourceBase(config);
+            case TYPE_REDIS: return new RedisSourceBase(config);
         }
 
         return null;

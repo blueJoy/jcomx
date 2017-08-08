@@ -7,4 +7,8 @@ public class SourceException extends Exception {
     public SourceException(UrlException e) {
         super(e);
     }
+
+    public SourceException(String message) {
+        super(message);
+    }
 }
