@@ -6,7 +6,7 @@
 
     <!--变量声明-->
     <property name="APP_NAME" value="jcomx"/>   <!--项目名-->
-    <property name="LOG_ROOT" value="/gomeo2o/logs/venus" /><!--日志根目录-->
+    <property name="LOG_ROOT" value="/example/logs/venus" /><!--日志根目录-->
     <property name="LEVEL" value="DEBUG" />                 <!--日志级别-->
     <property name="DEFAULT_FILE" value="FILE" />           <!--日志输入目标-->
 
@@ -43,6 +43,7 @@
     <logger name="ch.qos.logback" level="info"/>
 
 
+    <!-- 下面注释的是 error 发送报警邮件 -->
     <!--     <property name="smtpHost" value="mail.gomeplus.com" />
         <property name="smtpPort" value="587" />
         <property name="username" value="zhangzuliang@gomeplus.com" />

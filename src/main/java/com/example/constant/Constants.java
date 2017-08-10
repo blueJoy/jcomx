@@ -16,7 +16,8 @@ public final class Constants {
 
     public static final String DIRECTORY_SEPARATOR = "/";
 
+    public static final String STRING_EMPTY = "";
 
-
+    public static final String ENV_PORT ="PORT";
 
 }

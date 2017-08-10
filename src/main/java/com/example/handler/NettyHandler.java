@@ -14,16 +14,16 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.*;
 import io.netty.util.CharsetUtil;
-import sun.security.util.Length;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Created by baixiangzhu on 2017/7/26.
  */
+@Slf4j
 public class NettyHandler extends SimpleChannelInboundHandler<HttpRequest> {
 
     private static final String Content_Length = "Content-Length";
@@ -36,9 +36,13 @@ public class NettyHandler extends SimpleChannelInboundHandler<HttpRequest> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, HttpRequest request) throws Exception {
 
+        long statTime = System.currentTimeMillis();
+
         if(HttpUtil.is100ContinueExpected(request)){
             ctx.write(new DefaultFullHttpResponse(HttpVersion.HTTP_1_1,HttpResponseStatus.CONTINUE));
         }
+
+        log.info("the request info = [{}]",request);
 
         //获取请求资源的路径
         String uri = request.uri();
@@ -70,6 +74,8 @@ public class NettyHandler extends SimpleChannelInboundHandler<HttpRequest> {
 
         RequestMessage requestMessage = new RequestMessage(url,method,requestData,headerMaps,0);
 
+        log.info("build requestMessage is successfully!");
+
         //执行逻辑
         ResponseMessage responseMessage = Exectors.execute(requestMessage);
 
@@ -96,6 +102,9 @@ public class NettyHandler extends SimpleChannelInboundHandler<HttpRequest> {
             });
         }
 
+        long endTime = System.currentTimeMillis();
+
+        log.info("handle this url = [{}] expend [{}] ms.",url,(endTime - statTime));
     }
 
     //删除Content-Length  因为后面setEntity会检查

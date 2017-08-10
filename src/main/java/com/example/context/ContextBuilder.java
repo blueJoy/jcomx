@@ -9,11 +9,13 @@ import com.example.http.ResponseMessage;
 import com.example.schema.Schema;
 import com.example.schema.SchemaLoader;
 import com.example.schema.source.SourceBaseFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 生成Context
  * Created by baixiangzhu on 2017/7/27.
  */
+@Slf4j
 public class ContextBuilder {
 
     /**
@@ -22,6 +24,8 @@ public class ContextBuilder {
      * @return
      */
     public static Context build(RequestMessage request) throws ConfigException {
+
+        log.info("build content...");
 
         //初始化操作
         Config comxConfig = ComxConfigLoader.load();
@@ -38,7 +42,7 @@ public class ContextBuilder {
         //初始化SourceFactory
         SourceBaseFactory sourceBaseFactory = SourceBaseFactory.fromConf(comxConfig);
 
-        
+
         return new Context.Builder()
                 .request(request)
                 .response(new ResponseMessage())

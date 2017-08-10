@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  *
- * //TODO:情况太多，只能放弃
+ * //TODO:情况太多，只能放弃,没有JsonObject灵活性高
  *
  * Created by baixiangzhu on 2017/7/27.
  */

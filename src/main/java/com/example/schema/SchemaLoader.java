@@ -6,6 +6,7 @@ import com.example.constant.Constants;
 import com.example.exceptions.ConfigException;
 import com.google.common.collect.Maps;
 import com.sun.deploy.net.proxy.pac.PACFunctions;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
 
@@ -14,6 +15,7 @@ import java.util.Map;
  *      如：get.json/post.json等
  * Created by baixiangzhu on 2017/7/27.
  */
+@Slf4j
 public class SchemaLoader {
 
     private static final String CONF_FILE_SUFFIX = ".json";
@@ -31,6 +33,8 @@ public class SchemaLoader {
 
     public static Schema load(String path, String method) throws ConfigException {
         String filePath = ComxConfigLoader.getComxHome() + CONF_PATH_SECTION + path;
+
+        log.info("load business schema...filePath=[{}]",filePath);
 
         Config config = Loader.fromJsonFile(filePath + Constants.DIRECTORY_SEPARATOR + method + CONF_FILE_SUFFIX);
 

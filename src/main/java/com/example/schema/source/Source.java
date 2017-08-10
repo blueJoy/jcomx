@@ -7,6 +7,7 @@ import com.example.exceptions.SourceException;
 import com.example.exceptions.UnknownSourceBaseTypeException;
 import com.example.schema.TinyTemplate;
 import com.example.schema.source.sourcebase.AbstractSourceBase;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -24,6 +25,7 @@ import java.util.HashMap;
  *
  * Created by baixiangzhu on 2017/7/28.
  */
+@Slf4j
 public class Source {
 
     public static final String FIELD_ON_METHOD = "method";
@@ -52,18 +54,18 @@ public class Source {
     public Object loadData(Context context, HashMap<String,Object> reservedVariables){
 
         long startTime = System.currentTimeMillis();
-        Object result = 0;
+        Object result = null;
 
         try {
             result = this.doLoadData(context, reservedVariables);
 
             long spendTime = System.currentTimeMillis() - startTime;
 
-            System.out.println("load data use" + spendTime + "ms");
+            log.info("load data expend [{}] ms...",spendTime);
 
             return result;
         } catch (ConfigException e) {
-            e.printStackTrace();
+           log.error("");
         }
 
         return null;
@@ -84,6 +86,7 @@ public class Source {
             //TODO:何作用？
             reservedVariables.put(RESERVED_RENDERED_URI, renderedUri);
 
+            //根据不同的类型，使用不同的sourceBase具体执行
             Object data = this.getBase(context).executeLoading(context, config, reservedVariables);
 
             return data;

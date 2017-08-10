@@ -1,6 +1,7 @@
 package com.example.cache;
 
 import com.example.config.Config;
+import com.example.interfaces.JComxCache;
 
 /**
  * Created by baixiangzhu on 2017/8/8.

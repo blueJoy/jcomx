@@ -2,6 +2,7 @@ package com.example.cache;
 
 import com.example.config.Config;
 import com.example.exceptions.ConfigException;
+import com.example.interfaces.JComxCache;
 
 import java.util.HashMap;
 import java.util.Map;

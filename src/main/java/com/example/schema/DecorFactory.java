@@ -3,10 +3,12 @@ package com.example.schema;
 import com.example.config.Config;
 import com.example.exceptions.UnknownDecorTypeException;
 import com.example.schema.datadecor.*;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Created by baixiangzhu on 2017/7/28.
  */
+@Slf4j
 public class DecorFactory {
 
     private static final String EACH = "each";
@@ -22,12 +24,13 @@ public class DecorFactory {
     public static AbstractDecor create(Config config, String forceType) throws UnknownDecorTypeException {
 
         String type;
-
         if(forceType!= null && !forceType.isEmpty()){
             type = forceType;
         }else {
             type =  config.str(AbstractDecor.FIELD_TYPE,AbstractDecor.TYPE_EACH);;
         }
+
+        log.info("create decor ...type=[{}],forceType=[{}]",type,forceType);
 
         switch (type.toLowerCase()){
             case EACH: return new EachDecor(config);

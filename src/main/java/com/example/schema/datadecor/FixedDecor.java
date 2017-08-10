@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.config.Config;
 import com.example.context.Context;
 import com.example.exceptions.ConfigException;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
 
@@ -15,6 +16,7 @@ import java.util.Map;
  *
  * Created by baixiangzhu on 2017/8/1.
  */
+@Slf4j
 public class FixedDecor extends AbstractDecor {
 
     private static final String FIELD_FIXED_DATA = "fixedData";
@@ -27,10 +29,13 @@ public class FixedDecor extends AbstractDecor {
     @Override
     public void doDecorate(Object data, Context context) throws ConfigException {
 
-        JSONObject loaded;
+        log.info("FixedDecor doDecoreate execute .. config=[{}],data=[{}]",config,data);
+
         String field = super.config.str(FIELD_FIELD, "");
         JSONObject fixedData = super.config.sub(FIELD_FIXED_DATA).getData();
- /*       if(field.isEmpty()){
+ /*
+        JSONObject loaded;
+        if(field.isEmpty()){
             loaded = fixedData;
         }else {
             loaded = new JSONObject();

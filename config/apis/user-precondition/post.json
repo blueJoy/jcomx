@@ -1,0 +1,27 @@
+{
+    "meta":{
+        "name":"测试ext",
+        "module":"test",
+        "memo":"test",
+        "uri":{
+            "parameters":[
+                {
+                    "field":"userId",
+                    "name":"职员编号"
+                }
+            ]
+        }
+    },
+    "decors":[
+        {
+            "precondition":{
+                "jscript":"user/user-precondition"
+            },
+            "source":{
+                "base":"default",
+				"uri":"/user",
+                "method":"post"
+            }
+        }
+    ]
+}

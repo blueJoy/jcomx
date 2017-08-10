@@ -5,9 +5,11 @@ import com.alibaba.fastjson.JSONPath;
 import com.example.config.Config;
 import com.example.context.Context;
 import com.example.exceptions.ConfigException;
+import com.example.exceptions.PreConditionException;
 import com.example.exceptions.UnknownDecorTypeException;
 import com.example.schema.ConfBaseNode;
 import com.example.schema.DecorFactory;
+import com.example.schema.PreCondition;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,6 +27,8 @@ public abstract class AbstractDecor extends ConfBaseNode{
 
     protected static final String FIELD_REF_JSON_PATH = "refJsonPath";
     protected static final String FIELD_FIELD = "field";
+    protected static final String FIELD_PRECONDITION  = "precondition";
+
 
 
 
@@ -52,12 +56,9 @@ public abstract class AbstractDecor extends ConfBaseNode{
             //执行子decors，拼接接口
             this.executeChildDecors(data,context);
             
-        } catch (ConfigException e) {
-            e.printStackTrace();
-        } catch (UnknownDecorTypeException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
 
     }
 
@@ -105,12 +106,37 @@ public abstract class AbstractDecor extends ConfBaseNode{
 
     }
 
-    private boolean executePreconditionNode(Object data, Context context) {
-        return true;
+    /**
+     * 校验前置条件
+     *      precondition 配置的lambda表达式
+     * @param data
+     * @param context
+     * @return
+     */
+    private boolean executePreconditionNode(Object data, Context context) throws Exception {
+
+        Config preConditionConf = super.config.sub(FIELD_PRECONDITION);
+
+        if(preConditionConf == null || preConditionConf.getData().isEmpty()) return true;
+
+        try {
+            PreCondition preCondition = new PreCondition(preConditionConf);
+
+            return preCondition.doExecute(context,data);
+
+        } catch (PreConditionException e) {
+            System.out.println(e.getMessage());
+            throw e;
+        } catch (UnknownDecorTypeException e) {
+            System.out.println(e.getMessage());
+            throw e;
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
 
-    public abstract void doDecorate(Object data, Context context) throws ConfigException;
+    public abstract void doDecorate(Object data, Context context) throws Exception;
     public abstract String getType();
 
 

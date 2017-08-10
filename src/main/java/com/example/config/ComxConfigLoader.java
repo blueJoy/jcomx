@@ -5,11 +5,13 @@ import com.example.exceptions.ConfigException;
 import com.example.schema.GroovyScriptFactory;
 import com.example.schema.Loader;
 import com.example.schema.source.SourceBaseFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 加载comx.conf.json配置文件
  * Created by baixiangzhu on 2017/7/27.
  */
+@Slf4j
 public class ComxConfigLoader {
 
     private static final String COMX_HOME_KEY = "COMX_HOME";
@@ -44,12 +46,15 @@ public class ComxConfigLoader {
 
         COMX_HOME = System.getProperty(COMX_HOME_KEY);
         String configPath = COMX_HOME + Constants.DIRECTORY_SEPARATOR + CONF_FILE_NAME;
+
         comxConf = Loader.fromJsonFile(configPath);
 
         //初始化ScriptFactory
         GroovyScriptFactory.init();
 
         initialized = true;
+
+        log.info("load comx.conf.json complete..path=[{}]",configPath);
     }
 
     public static String getComxHome(){

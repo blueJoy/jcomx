@@ -43,7 +43,7 @@ public class TinyTemplate {
             MatchResult matchResult = matcher.toMatchResult();
             //匹配{}
             String oldTpl = tpl.substring(matchResult.start(1), matcher.end(1));
-            String newTpl = replace2(oldTpl,context);
+            String newTpl = replaceForReflect(oldTpl,context);
             matcher.appendReplacement(sb,newTpl);
         }
         matcher.appendTail(sb);
@@ -52,6 +52,7 @@ public class TinyTemplate {
     }
 
     //TODO：可考虑使用反射？
+    //这种方式，让request，url,query都实现map接口
     private String replace(String matched, Context context) {
 
         String[] varSections = matched.split("\\.");
@@ -69,7 +70,8 @@ public class TinyTemplate {
         return matchedValue.toString();
     }
 
-    private String replace2(String matched, Context context) {
+    //通过反射的方式，执行get方法
+    private String replaceForReflect(String matched, Context context) {
 
         String[] varSections = matched.split("\\.");
         Object matchedValue = this.vars;

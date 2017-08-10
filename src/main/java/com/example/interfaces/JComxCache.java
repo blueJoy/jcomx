@@ -1,4 +1,4 @@
-package com.example.cache;
+package com.example.interfaces;
 
 /**
  *  定义接口，用来限制使用者，可以用到的方法

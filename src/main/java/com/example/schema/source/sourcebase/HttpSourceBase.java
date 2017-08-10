@@ -23,6 +23,7 @@ public class HttpSourceBase extends AbstractRequestSourceBase {
 
     @Override
     public Object doRequest(RequestMessage request, Context context) throws IOException {
+
         return request.execute(context).getData();
     }
 

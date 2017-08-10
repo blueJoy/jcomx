@@ -1,0 +1,38 @@
+{
+    "meta":{
+        "name":"测试ext",
+        "module":"test",
+        "memo":"test",
+        "uri":{
+            "parameters":[
+                {
+                    "field":"userId",
+                    "name":"职员编号"
+                }
+            ]
+        }
+    },
+    "decors":[
+        {
+            "precondition":{
+                "jlambda":"context.getRequest().get('url').get('query').get('userId') != null && context.getRequest().get('url').get('query').get('userId') != ''"
+            },
+            "source":{
+                "base":"default",
+				"uri":"/user?userId={request.url.query.userId}"
+            },
+            "decors":[
+                {
+                    "field":"titleId",
+                    "source":{
+                        "base":"default",
+                        "uri":"/titles?titleId={ref.titleId}"
+                    },
+					"onError": {
+							"type": "ignore"
+						}
+                }
+            ]
+        }
+    ]
+}

@@ -1,7 +1,7 @@
 package com.example.schema.source.sourcebase;
 
 import com.alibaba.fastjson.JSON;
-import com.example.cache.JComxCache;
+import com.example.interfaces.JComxCache;
 import com.example.cache.JedisCacheFactory;
 import com.example.config.Config;
 import com.example.context.Context;

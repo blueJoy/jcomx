@@ -7,6 +7,7 @@ import com.example.constant.Constants;
 import com.example.context.Context;
 import com.example.context.ContextBuilder;
 import com.example.handler.ComxHandler;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -22,6 +23,7 @@ import java.util.UUID;
 /**
  * Created by baixiangzhu on 2017/7/26.
  */
+@Slf4j
 public class RequestMessage implements ArrayAccessBase{
 
     public static final String METHOD_GET      = "get";
@@ -86,6 +88,9 @@ public class RequestMessage implements ArrayAccessBase{
         String requestData = data != null ? new JSONObject(data).toJSONString() : "";
 
         try {
+
+            log.info("send http request start ... targetUrl=[{}],method=[{}],requestData=[{}],headers=[{}]",targetUrl,method,requestData,headers);
+
             HttpResponse response = ApacheHttpClient.request(targetUrl, method.toUpperCase(), requestData, headers, timeout);
 
             int statusCode = response.getStatusLine().getStatusCode();
@@ -93,16 +98,22 @@ public class RequestMessage implements ArrayAccessBase{
             if(statusCode == HttpStatus.SC_OK){
                 HttpEntity entity = response.getEntity();
                 String responseBody = entity != null ? EntityUtils.toString(entity) : null;
+
+                log.info("send http request result ... responseBody=[{}]",responseBody);
+
                 JSONObject responseJson = JSONObject.parseObject(responseBody);
 
                 return new ResponseMessage(responseJson.get("data"),responseJson.getString("message"),toString(),statusCode);
             }else{
+
+                log.error("Unexpected response status=[{}]",statusCode);
 
                 throw new ClientProtocolException("Unexpected response status: " + statusCode);
 
             }
 
         } catch (IOException e) {
+            log.error("execute http request error.",e);
             throw e;
         }
 
